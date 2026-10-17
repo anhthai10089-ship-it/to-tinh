@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cậu có yêu Nguyễn Anh Thái không? ❤️</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Family Comfortaa & Dancing Script -->
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Comfortaa', cursive, sans-serif;
+            background: linear-gradient(135deg, #ffe6e9 0%, #ffc3a0 50%, #ffa8a8 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            touch-action: manipulation;
+            user-select: none;
+        }
+
+        .handwritten {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* Floating background hearts animation */
+        .bg-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-heart {
+            position: absolute;
+            color: rgba(255, 182, 193, 0.75);
+            animation: floatUp 7s infinite linear;
+            bottom: -50px;
+            filter: drop-shadow(0 2px 4px rgba(255,105,180,0.2));
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.8);
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(-115vh) rotate(360deg) scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        /* Heartbeat effect */
+        .pulse-heart {
+            animation: pulse 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        /* Cute bouncing cartoon */
+        .cute-bounce {
+            animation: cuteBounce 2.2s infinite ease-in-out;
+        }
+
+        @keyframes cuteBounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        /* Transition for Smooth Actions */
+        #noBtn {
+            transition: left 0.2s ease-out, top 0.2s ease-out, transform 0.15s ease-out;
+            will-change: left, top;
+        }
+
+        #yesBtn {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Custom Glassmorphism Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 2px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 20px 50px rgba(255, 105, 180, 0.3);
+        }
+
+        /* Custom Shake animation for sadness */
+        .sad-shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4 relative min-h-screen">
+
+    <!-- Floating Background Hearts Container -->
+    <div class="bg-hearts" id="bgHearts"></div>
+
+    <!-- Music Toggle Button with Rotating Disc -->
+    <button id="musicBtn" onclick="toggleMusic()" class="fixed top-4 right-4 z-50 bg-white/90 hover:bg-white text-pink-500 p-3 rounded-full shadow-xl border-2 border-pink-300 transition transform hover:scale-110 flex items-center justify-center w-12 h-12">
+        <i id="musicIcon" class="fas fa-music text-lg"></i>
+    </button>
+
+    <!-- Main Proposal Card -->
+    <div id="mainCard" class="glass-card max-w-md w-full rounded-3xl p-6 md:p-8 text-center z-10 relative my-auto">
+        
+        <!-- Dynamic Mascot / SVG Cat changing emotions -->
+        <div id="mascotContainer" class="w-44 h-44 mx-auto mb-3 relative cute-bounce">
+            <!-- Normal Cat -->
+            <svg id="catNormal" viewBox="0 0 200 200" class="w-full h-full drop-shadow-md">
+                <polygon points="40,70 20,10 80,40" fill="#FFA3B1" />
+                <polygon points="45,65 30,20 75,42" fill="#FFC2CD" />
+                <polygon points="160,70 180,10 120,40" fill="#FFA3B1" />
+                <polygon points="155,65 170,20 125,42" fill="#FFC2CD" />
+                <ellipse cx="100" cy="110" rx="75" ry="60" fill="#FFFFFF" stroke="#FFA3B1" stroke-width="4"/>
+                <ellipse cx="55" cy="120" rx="12" ry="8" fill="#FF8093" opacity="0.6"/>
+                <ellipse cx="145" cy="120" rx="12" ry="8" fill="#FF8093" opacity="0.6"/>
+                <ellipse cx="70" cy="100" rx="8" ry="10" fill="#4A4A4A"/>
+                <circle cx="68" cy="97" r="3" fill="#FFFFFF"/>
+                <ellipse cx="130" cy="100" rx="8" ry="10" fill="#4A4A4A"/>
+                <circle cx="128" cy="97" r="3" fill="#FFFFFF"/>
+                <polygon points="97,112 103,112 100,116" fill="#FF8093"/>
+                <path d="M 92,118 Q 100,125 100,118 Q 100,125 108,118" fill="none" stroke="#4A4A4A" stroke-width="3" stroke-linecap="round"/>
+                <path d="M 100,125 C 80,95 50,115 100,155 C 150,115 120,95 100,125 Z" fill="#FF4D6D" class="pulse-heart"/>
+                <ellipse cx="65" cy="140" rx="10" ry="8" fill="#FFFFFF" stroke="#FFA3B1" stroke-width="3"/>
+                <ellipse cx="135" cy="140" rx="10" ry="8" fill="#FFFFFF" stroke="#FFA3B1" stroke-width="3"/>
+            </svg>
+
+            <!-- Crying / Sad Cat (Hidden initially) -->
+            <svg id="catSad" viewBox="0 0 200 200" class="w-full h-full drop-shadow-md hidden">
+                <polygon points="40,70 20,10 80,40" fill="#FFA3B1" />
+                <polygon points="160,70 180,10 120,40" fill="#FFA3B1" />
+                <ellipse cx="100" cy="110" rx="75" ry="60" fill="#FFFFFF" stroke="#FFA3B1" stroke-width="4"/>
+                <ellipse cx="55" cy="120" rx="12" ry="8" fill="#FF8093" opacity="0.6"/>
+                <ellipse cx="145" cy="120" rx="12" ry="8" fill="#FF8093" opacity="0.6"/>
+                <!-- Sad Tilted Eyes -->
+                <ellipse cx="70" cy="102" rx="9" ry="11" fill="#4A4A4A"/>
+                <ellipse cx="130" cy="102" rx="9" ry="11" fill="#4A4A4A"/>
+                <!-- Tears -->
+                <path d="M 62,110 Q 55,130 60,140 Q 65,130 65,110 Z" fill="#70C1FF" opacity="0.8"/>
+                <path d="M 138,110 Q 145,130 140,140 Q 135,130 135,110 Z" fill="#70C1FF" opacity="0.8"/>
+                <!-- Sad mouth -->
+                <path d="M 90,125 Q 100,115 110,125" fill="none" stroke="#4A4A4A" stroke-width="3" stroke-linecap="round"/>
+                <!-- Broken heart -->
+                <path d="M 90,140 Q 80,125 70,140 Q 80,160 100,170 Q 120,160 130,140 Q 120,125 110,140 Z" fill="#FF4D6D"/>
+                <path d="M 100,135 L 95,148 L 105,155 L 100,170" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+            </svg>
+        </div>
+
+        <!-- Question Title -->
+        <h1 id="questionText" class="text-2xl md:text-3xl font-extrabold text-pink-600 mb-2 leading-tight">
+            Bạn có yêu Nguyễn Anh Thái không? ❤️
+        </h1>
+        <p id="subText" class="text-gray-600 text-sm md:text-base mb-4">
+            Trả lời thật lòng nha, dối lòng là Thái buồn lắm đó! 🥺
+        </p>
+
+        <!-- Dynamic hint line -->
+        <div id="noHint" class="h-6 text-pink-500 font-bold text-xs md:text-sm mb-4 opacity-0 transition-opacity duration-300">
+            Nút "Không" đang chạy trốn kìa!
+        </div>
+
+        <!-- Action Buttons Container -->
+        <div id="btnContainer" class="flex flex-col sm:flex-row items-center justify-center gap-4 min-h-[110px] relative">
+            <!-- YES BUTTON -->
+            <button id="yesBtn" onclick="acceptLove()" class="w-full sm:w-auto bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-pink-300/50 transform hover:-translate-y-0.5 text-lg z-20 flex items-center justify-center gap-2 cursor-pointer">
+                <span>Có chứ! Yêu Thái nhất ❤️</span>
+            </button>
+
+            <!-- NO BUTTON -->
+            <button id="noBtn" 
+                onmouseenter="dodgeNoButton()" 
+                ontouchstart="dodgeNoButton(event)" 
+                onclick="handleNoClick(event)" 
+                class="w-full sm:w-auto bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-3 px-6 rounded-full shadow transition-all duration-200 text-base z-10 cursor-pointer">
+                Không nha 😜
+            </button>
+        </div>
+    </div>
+
+    <!-- POPUP 1: When user somehow manages to CLICK "NO" -->
+    <div id="noSadModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
+        <div id="noSadCard" class="glass-card max-w-sm w-full rounded-3xl p-6 text-center transform scale-90 transition-transform duration-300 bg-white/95 shadow-2xl border-4 border-pink-300">
+            <div class="text-6xl mb-3 animate-bounce">🥺💔</div>
+            <h3 class="text-2xl font-bold text-pink-600 mb-2 handwritten">Huhu... hắt hủi vậy luôn?</h3>
+            <p class="text-gray-700 text-sm md:text-base leading-relaxed mb-6 font-medium">
+                "Ủa... Nguyễn Anh Thái có làm gì đâu mà hắt hủi vậy? 🥺💔 Mới bấm nhầm đúng không, bấm lại nút <strong class="text-pink-600">'Có'</strong> đi nha~"
+            </p>
+            <button onclick="closeNoSadModal()" class="w-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold py-3 px-6 rounded-full shadow-lg hover:scale-105 transition transform text-base">
+                Nỡ lòng nào... Yêu Thái thôi nè! ❤️
+            </button>
+        </div>
+    </div>
+
+    <!-- POPUP 2: Success Celebration Modal -->
+    <div id="successModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-md hidden opacity-0 transition-opacity duration-500">
+        <div class="glass-card max-w-lg w-full rounded-3xl p-6 md:p-8 text-center transform scale-90 transition-transform duration-500 bg-white/95 shadow-2xl border-4 border-pink-300 max-h-[90vh] overflow-y-auto">
+            <div class="text-6xl mb-2 animate-bounce">🤑💸🎉</div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-pink-600 mb-2 handwritten leading-tight">
+                Cảm ơn bạn đã yêu quý! 💕
+            </h2>
+            <p class="text-pink-600 font-bold text-base md:text-lg mb-4 bg-pink-50 p-3 rounded-2xl border border-pink-200 shadow-sm">
+                Nếu bạn yêu quý hãy chuyển khoản cho tớ 50k đi ahaha 💸🤣
+            </p>
+
+            <!-- Fun Transfer 50k Card Section -->
+            <div class="mb-5 bg-gradient-to-br from-pink-100 to-rose-50 p-4 rounded-2xl border-2 border-pink-300 shadow-inner">
+                <p class="text-xs font-bold text-pink-500 uppercase tracking-wider mb-2">Quỹ Yêu Thương Nguyễn Anh Thái ❤️</p>
+                
+                <!-- Fake/Fun QR Code Concept -->
+                <div class="w-32 h-32 mx-auto bg-white p-2 rounded-xl shadow-md border border-pink-200 flex flex-col items-center justify-center relative group cursor-pointer" onclick="copySTK()">
+                    <i class="fas fa-qrcode text-6xl text-pink-500"></i>
+                    <span class="text-[10px] font-bold text-gray-500 mt-1">Bấm để sao chép STK</span>
+                </div>
+
+                <div class="mt-3 text-sm text-gray-700">
+                    <p class="font-semibold">Mức phí yêu thương: <span class="text-rose-600 font-extrabold text-base">50.000 VNĐ</span></p>
+                    <p class="text-xs text-gray-500 italic mt-0.5">(Nội dung: Yeu Quy Nguyen Anh Thai)</p>
+                </div>
+
+                <button onclick="copySTK()" class="mt-3 bg-pink-500 hover:bg-pink-600 text-white text-xs font-bold py-2 px-4 rounded-full shadow transition transform active:scale-95 flex items-center justify-center gap-1.5 mx-auto">
+                    <i class="fas fa-copy"></i> Sao chép thông tin ck 50k
+                </button>
+            </div>
+
+            <!-- Send Message Box -->
+            <div class="mb-4 text-left">
+                <label class="block text-xs font-bold text-pink-600 mb-1">Gửi kèm hóa đơn/lời nhắn cho Thái nè:</label>
+                <textarea id="loveMessage" rows="2" class="w-full p-3 rounded-2xl border-2 border-pink-200 focus:border-pink-500 focus:outline-none text-sm text-gray-700 bg-pink-50/50 resize-none" placeholder="Ví dụ: Đã ck 50k lì xì Thái nha 💸❤️"></textarea>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <button onclick="sendLoveMessage()" class="w-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold py-3 px-6 rounded-full shadow-lg hover:shadow-pink-300 hover:scale-105 transition transform text-base flex items-center justify-center gap-2">
+                    <i class="fas fa-paper-plane"></i> Gửi cho Nguyễn Anh Thái nè!
+                </button>
+                <button onclick="closeModal()" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-600 font-semibold py-2 px-6 rounded-full text-xs transition">
+                    Đóng cửa sổ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Web Audio Sound Engine -->
+    <script>
+        let audioCtx = null;
+        let isMusicPlaying = false;
+        let bgmInterval = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // Cute Dodge Pop Sound
+        function playPopSound() {
+            initAudio();
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(350, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(900, audioCtx.currentTime + 0.08);
+            gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.08);
+        }
+
+        // Sad Whine Sound when No is Clicked
+        function playSadSound() {
+            initAudio();
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.35);
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.35);
+        }
+
+        // Happy Victory Tune
+        function playWinSound() {
+            initAudio();
+            if (!audioCtx) return;
+            const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99];
+            notes.forEach((freq, idx) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.value = freq;
+                const startTime = audioCtx.currentTime + idx * 0.09;
+                gain.gain.setValueAtTime(0.2, startTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.4);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(startTime);
+                osc.stop(startTime + 0.4);
+            });
+        }
+
+        // BGM Melodic Loop
+        const bgmNotes = [
+            261.63, 329.63, 392.00, 329.63, 349.23, 440.00, 392.00, 329.63,
+            261.63, 329.63, 392.00, 440.00, 392.00, 349.23, 329.63, 293.66
+        ];
+        let noteIdx = 0;
+
+        function toggleMusic() {
+            initAudio();
+            const musicIcon = document.getElementById('musicIcon');
+            
+            if (isMusicPlaying) {
+                clearInterval(bgmInterval);
+                isMusicPlaying = false;
+                musicIcon.className = 'fas fa-music text-lg';
+                musicIcon.parentElement.classList.remove('animate-spin');
+            } else {
+                isMusicPlaying = true;
+                musicIcon.className = 'fas fa-compact-disc text-lg';
+                musicIcon.parentElement.classList.add('animate-spin');
+                
+                bgmInterval = setInterval(() => {
+                    if (!isMusicPlaying || !audioCtx) return;
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.value = bgmNotes[noteIdx];
+                    gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.32);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.32);
+                    noteIdx = (noteIdx + 1) % bgmNotes.length;
+                }, 340);
+            }
+        }
+
+        // --- Core Interactions ---
+        let dodgeCount = 0;
+        let yesScale = 1;
+
+        const dodgeTexts = [
+            "Ơ kìa... Thái buồn đó 🥺",
+            "Đừng bắt tớ mà!",
+            "Không cho bấm 'Không' đâu 😜",
+            "Nút này bị hỏng rùi nha!",
+            "Bấm 'Yêu Thái' kìa mừ! ❤️",
+            "Năn nỉ luôn đó... 👉👈",
+            "Bấm nhầm nút đúng hông?",
+            "Thái chạy đâu cho thoát! 🏃‍♂️",
+            "Chỉ được yêu Nguyễn Anh Thái thôi!",
+            "Cố chấp quá nha hì hì 😜"
+        ];
+
+        function dodgeNoButton(e) {
+            if (e) e.preventDefault();
+            
+            dodgeCount++;
+            playPopSound();
+
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            const noHint = document.getElementById('noHint');
+
+            // Show hint message
+            const randomText = dodgeTexts[Math.floor(Math.random() * dodgeTexts.length)];
+            noHint.innerText = randomText;
+            noHint.style.opacity = '1';
+
+            // Grow YES button bigger each dodge
+            yesScale += 0.18;
+            yesBtn.style.transform = `scale(${yesScale})`;
+            if (yesScale > 2.2) {
+                yesBtn.style.zIndex = '40';
+            }
+
+            // Move NO button randomly in screen
+            const padding = 25;
+            const btnWidth = noBtn.offsetWidth || 100;
+            const btnHeight = noBtn.offsetHeight || 40;
+
+            const maxX = window.innerWidth - btnWidth - padding;
+            const maxY = window.innerHeight - btnHeight - padding;
+
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = `${randomX}px`;
+            noBtn.style.top = `${randomY}px`;
+        }
+
+        // Handle IF user somehow manages to CLICK "No"
+        function handleNoClick(e) {
+            if (e) e.preventDefault();
+            playSadSound();
+
+            // Switch Cat mascot to crying
+            document.getElementById('catNormal').classList.add('hidden');
+            document.getElementById('catSad').classList.remove('hidden');
+
+            // Make YES button even bigger
+            yesScale += 0.3;
+            document.getElementById('yesBtn').style.transform = `scale(${yesScale})`;
+
+            // Show Sad Pop-up
+            const sadModal = document.getElementById('noSadModal');
+            const sadCard = document.getElementById('noSadCard');
+            
+            sadModal.classList.remove('hidden');
+            setTimeout(() => {
+                sadModal.classList.remove('opacity-0');
+                sadCard.classList.remove('scale-90');
+                sadCard.classList.add('scale-100', 'sad-shake');
+            }, 50);
+
+            // Re-dodge No button to new position
+            dodgeNoButton();
+        }
+
+        function closeNoSadModal() {
+            const sadModal = document.getElementById('noSadModal');
+            const sadCard = document.getElementById('noSadCard');
+            
+            sadModal.classList.add('opacity-0');
+            sadCard.classList.remove('scale-100', 'sad-shake');
+            sadCard.classList.add('scale-90');
+            
+            setTimeout(() => {
+                sadModal.classList.add('hidden');
+                // Restore cat mascot
+                document.getElementById('catSad').classList.add('hidden');
+                document.getElementById('catNormal').classList.remove('hidden');
+            }, 300);
+        }
+
+        function acceptLove() {
+            playWinSound();
+
+            // Fire heart confetti burst
+            confetti({
+                particleCount: 140,
+                spread: 90,
+                origin: { y: 0.6 }
+            });
+
+            // Extra heart confetti loop
+            const duration = 3.5 * 1000;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 4,
+                    angle: 60,
+                    spread: 60,
+                    origin: { x: 0 },
+                    colors: ['#ff4d6d', '#ff8093', '#ffb6c1']
+                });
+                confetti({
+                    particleCount: 4,
+                    angle: 120,
+                    spread: 60,
+                    origin: { x: 1 },
+                    colors: ['#ff4d6d', '#ff8093', '#ffb6c1']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            })();
+
+            // Open Success Modal
+            const modal = document.getElementById('successModal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.children[0].classList.remove('scale-90');
+                modal.children[0].classList.add('scale-100');
+            }, 50);
+        }
+
+        function sendLoveMessage() {
+            const msg = document.getElementById('loveMessage').value.trim();
+            const defaultText = msg ? `Tớ đã chuyển khoản 50k yêu quý Nguyễn Anh Thái rồi nè! Lời nhắn: "${msg}" 💸❤️` : "Tớ chuyển 50k cho Nguyễn Anh Thái rồi nè ahaha! 💸❤️";
+            
+            // Copy message to clipboard
+            const tempInput = document.createElement('textarea');
+            tempInput.value = defaultText;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            alert("Đã sao chép lời nhắn ngọt ngào kèm 50k! Hãy dán (Paste) gửi cho Nguyễn Anh Thái ngay nha 💕");
+        }
+
+        function copySTK() {
+            const stkInfo = "Chuyển khoản 50k yêu quý Nguyễn Anh Thái - Nội dung: Yeu Quy Nguyen Anh Thai";
+            const tempInput = document.createElement('textarea');
+            tempInput.value = stkInfo;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            alert("Đã sao chép nội dung chuyển khoản 50k cho Thái rồi đó nha 💸🤣!");
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('successModal');
+            modal.classList.add('opacity-0');
+            modal.children[0].classList.remove('scale-100');
+            modal.children[0].classList.add('scale-90');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 400);
+        }
+
+        // --- Background Floating Hearts Generator ---
+        function createBgHearts() {
+            const container = document.getElementById('bgHearts');
+            const heartCount = 20;
+            const icons = ['❤️', '💖', '💕', '🌸', '✨', '💗'];
+
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'bg-heart';
+                heart.innerText = icons[Math.floor(Math.random() * icons.length)];
+                heart.style.left = `${Math.random() * 100}%`;
+                heart.style.animationDuration = `${5.5 + Math.random() * 5.5}s`;
+                heart.style.animationDelay = `${Math.random() * 5}s`;
+                heart.style.fontSize = `${16 + Math.random() * 22}px`;
+                container.appendChild(heart);
+            }
+        }
+
+        // Auto initialize Audio Context on first click
+        window.addEventListener('click', () => {
+            initAudio();
+        }, { once: true });
+
+        window.onload = function() {
+            createBgHearts();
+        };
+    </script>
+</body>
+</html>
